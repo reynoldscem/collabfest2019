@@ -11,7 +11,7 @@ if [[ $# -eq 0 ]] || [[ $1 == "---" ]]; then
         sed -e 's/^[[:space:]]*//' | \
         sed '1,2d' | \
         awk 'FNR%2' | \
-        awk '{print} NR % 2 == 0 { print ""; }')
+        awk '{print} NR % 2 == 0 {print "";}')
     [[ $1 == "---" ]] && shift 1
 elif [[ "$1" == '-h' ]] || [[ "$1" == '--help' ]]; then
     echo "Use no arguments or first argument of '---' to download beer list."
@@ -32,7 +32,7 @@ else
         echo "Use -h or --help for help."
     fi
 fi
-BEER_LIST=$(awk -F '\n' '{RS="\n\n"} {print $1 "_;_" $2}' <<< "$BEER_LIST")
+BEER_LIST=$(awk -v RS="" -F '\n' '{print $1"_;_"$2}' <<< "$BEER_LIST")
 
 grep_arguments=("-i")
 if [[ $# -gt 0 ]]; then
